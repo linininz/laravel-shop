@@ -1,5 +1,7 @@
 /node_modules
 /public/hot
+/public/.htaccess
+/public/nginx.htaccess
 /public/storage
 /storage/*.key
 /vendor
