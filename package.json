@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "china-area-data": "^5.0.1",
-        "laravel-mix": "^6.0.13"
+        "laravel-mix": "^6.0.13",
+        "sweetalert": "^2.1.2"
     }
 }
