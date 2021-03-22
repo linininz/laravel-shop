@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Dcat\Admin\Traits\HasDateTimeFormatter;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 use App\Exceptions\CouponCodeUnavailableException;
+use App\Models\User;
+use Carbon\Carbon;
+use Dcat\Admin\Traits\HasDateTimeFormatter;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class CouponCode extends Model
 {
-    use HasFactory,HasDateTimeFormatter;
+    use HasFactory, HasDateTimeFormatter;
 
     // 用常量的方式定义支持的优惠券类型
     const TYPE_FIXED = 'fixed';
     const TYPE_PERCENT = 'percent';
 
     public static $typeMap = [
-        self::TYPE_FIXED   => '固定金额',
+        self::TYPE_FIXED => '固定金额',
         self::TYPE_PERCENT => '比例',
     ];
 
@@ -47,27 +48,27 @@ class CouponCode extends Model
         do {
             // 生成一个指定长度的随机字符串，并转成大写
             $code = strtoupper(Str::random($length));
-        // 如果生成的码已存在就继续循环
+            // 如果生成的码已存在就继续循环
         } while (self::query()->where('code', $code)->exists());
 
         return $code;
     }
-    
+
     public function getDescriptionAttribute()
     {
         $str = '';
 
         if ($this->min_amount > 0) {
-            $str = '满'.str_replace('.00', '', $this->min_amount);
+            $str = '满' . str_replace('.00', '', $this->min_amount);
         }
         if ($this->type === self::TYPE_PERCENT) {
-            return $str.'优惠'.str_replace('.00', '', $this->value).'%';
+            return $str . '优惠' . str_replace('.00', '', $this->value) . '%';
         }
 
-        return $str.'减'.str_replace('.00', '', $this->value);
+        return $str . '减' . str_replace('.00', '', $this->value);
     }
-    
-    public function checkAvailable($orderAmount = null)
+
+    public function checkAvailable(User $user, $orderAmount = null)
     {
         if (!$this->enabled) {
             throw new CouponCodeUnavailableException('优惠券不存在');
@@ -88,6 +89,23 @@ class CouponCode extends Model
         if (!is_null($orderAmount) && $orderAmount < $this->min_amount) {
             throw new CouponCodeUnavailableException('订单金额不满足该优惠券最低金额');
         }
+
+        $used = Order::where('user_id', $user->id)
+            ->where('coupon_code_id', $this->id)
+            ->where(function ($query) {
+                $query->where(function ($query) {
+                    $query->whereNull('paid_at')
+                        ->where('closed', false);
+                })->orWhere(function ($query) {
+                    $query->whereNotNull('paid_at')
+                        ->where('refund_status', '!=', Order::REFUND_STATUS_SUCCESS);
+                });
+            })
+            ->exists();
+        if ($used) {
+            throw new CouponCodeUnavailableException('你已经使用过这张优惠券了');
+        }
+
     }
 
     public function getAdjustedPrice($orderAmount)
@@ -111,5 +129,5 @@ class CouponCode extends Model
             return $this->decrement('used');
         }
     }
-    
+
 }
