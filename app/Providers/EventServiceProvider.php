@@ -30,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         OrderReviewed::class => [
             UpdateProductRating::class,
         ],
+        'Illuminate\Database\Events\QueryExecuted' => [
+            'App\Listeners\QueryListener'
+        ]
     ];
 
     /**
