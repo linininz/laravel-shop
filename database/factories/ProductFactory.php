@@ -34,8 +34,11 @@ class ProductFactory extends Factory
             "https://cdn.learnku.com/uploads/images/201806/01/5320/pa7DrV43Mw.jpg",
         ]);
 
+        $category = \App\Models\Category::query()->where('is_directory', false)->inRandomOrder()->first();
+
         return [
             'title'        => $this->faker->word,
+            'category_id'  => $category ? $category->id : null,
             'description'  => $this->faker->sentence,
             'image'        => $image,
             'on_sale'      => true,
