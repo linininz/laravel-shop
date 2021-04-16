@@ -21,9 +21,9 @@ class ProductsController extends AdminController
     {
         $grid = new Grid(new Product);
         // 使用 with 来预加载商品类目数据，减少 SQL 查询
-        $grid->model()->with(['category']);
+        $grid->model()->where('type', Product::TYPE_NORMAL)->with(['category']);
         $grid->id('ID')->sortable();
-        $grid->title('商品名称');
+        $grid->column('title','商品名称');
         // Laravel-Admin 支持用符号 . 来展示关联关系的字段
         $grid->column('category.name', '类目');
         $grid->on_sale('已上架')->display(function ($value) {
@@ -58,7 +58,8 @@ class ProductsController extends AdminController
 
         $builder = Product::with('skus');
         $form = Form::make($builder, function (Form $form) {
-
+            // 在表单中添加一个名为 type，值为 Product::TYPE_NORMAL 的隐藏字段
+            $form->hidden('type')->value(Product::TYPE_NORMAL);
             // 创建一个输入框，第一个参数 title 是模型的字段名，第二个参数是该字段描述
             $form->text('title', '商品名称')->rules('required');
 

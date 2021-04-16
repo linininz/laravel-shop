@@ -32,60 +32,60 @@ class AdminTablesSeeder extends Seeder
                     "created_at" => "2021-03-21 01:16:20",
                     "icon" => "feather icon-settings",
                     "id" => 2,
-                    "order" => 7,
+                    "order" => 9,
                     "parent_id" => 0,
                     "title" => "Admin",
-                    "updated_at" => "2021-04-14 23:02:32",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => ""
                 ],
                 [
                     "created_at" => "2021-03-21 01:16:20",
                     "icon" => "",
                     "id" => 3,
-                    "order" => 8,
+                    "order" => 10,
                     "parent_id" => 2,
                     "title" => "Users",
-                    "updated_at" => "2021-04-14 23:02:32",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "auth/users"
                 ],
                 [
                     "created_at" => "2021-03-21 01:16:20",
                     "icon" => "",
                     "id" => 4,
-                    "order" => 9,
+                    "order" => 11,
                     "parent_id" => 2,
                     "title" => "Roles",
-                    "updated_at" => "2021-04-14 23:02:32",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "auth/roles"
                 ],
                 [
                     "created_at" => "2021-03-21 01:16:20",
                     "icon" => "",
                     "id" => 5,
-                    "order" => 10,
+                    "order" => 12,
                     "parent_id" => 2,
                     "title" => "Permission",
-                    "updated_at" => "2021-04-14 23:02:32",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "auth/permissions"
                 ],
                 [
                     "created_at" => "2021-03-21 01:16:20",
                     "icon" => "",
                     "id" => 6,
-                    "order" => 11,
+                    "order" => 13,
                     "parent_id" => 2,
                     "title" => "Menu",
-                    "updated_at" => "2021-04-14 23:02:33",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "auth/menu"
                 ],
                 [
                     "created_at" => "2021-03-21 01:16:20",
                     "icon" => "",
                     "id" => 7,
-                    "order" => 12,
+                    "order" => 14,
                     "parent_id" => 2,
                     "title" => "Operation log",
-                    "updated_at" => "2021-04-14 23:02:33",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "auth/logs"
                 ],
                 [
@@ -112,20 +112,20 @@ class AdminTablesSeeder extends Seeder
                     "created_at" => "2021-03-22 19:48:41",
                     "icon" => "fa-rmb",
                     "id" => 10,
-                    "order" => 5,
+                    "order" => 7,
                     "parent_id" => 0,
                     "title" => "订单管理",
-                    "updated_at" => "2021-04-14 23:02:32",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "/orders"
                 ],
                 [
                     "created_at" => "2021-03-22 22:27:13",
                     "icon" => "fa-tags",
                     "id" => 11,
-                    "order" => 6,
+                    "order" => 8,
                     "parent_id" => 0,
                     "title" => "优惠券管理",
-                    "updated_at" => "2021-04-14 23:02:32",
+                    "updated_at" => "2021-04-16 23:17:50",
                     "uri" => "/coupon_codes"
                 ],
                 [
@@ -137,6 +137,26 @@ class AdminTablesSeeder extends Seeder
                     "title" => "类目管理",
                     "updated_at" => "2021-04-14 23:02:32",
                     "uri" => "/categories"
+                ],
+                [
+                    "created_at" => "2021-04-16 23:17:01",
+                    "icon" => "fa-flag-checkered",
+                    "id" => 13,
+                    "order" => 6,
+                    "parent_id" => 9,
+                    "title" => "众筹商品",
+                    "updated_at" => "2021-04-16 23:17:50",
+                    "uri" => "/crowdfunding_products"
+                ],
+                [
+                    "created_at" => "2021-04-16 23:17:39",
+                    "icon" => "fa-cubes",
+                    "id" => 14,
+                    "order" => 5,
+                    "parent_id" => 9,
+                    "title" => "普通商品",
+                    "updated_at" => "2021-04-16 23:17:49",
+                    "uri" => "/products"
                 ]
             ]
         );
