@@ -38,6 +38,7 @@ class ProductFactory extends Factory
 
         return [
             'title'        => $this->faker->word,
+            'long_title'   => $this->faker->sentence,
             'category_id'  => $category ? $category->id : null,
             'description'  => $this->faker->sentence,
             'image'        => $image,
