@@ -174,6 +174,7 @@ class OrderService
                     $order->update([
                         'refund_no' => $refundNo,
                         'refund_status' => Order::REFUND_STATUS_SUCCESS,
+                        'extra' => '{"refund_reason":"1"}',
                     ]);
                 }
                 break;

@@ -24,6 +24,7 @@ class OrdersController extends AdminController
     {
         $grid = new Grid(new Order);
 
+        $grid->model()->with('user');
         // 只展示已支付的订单，并且默认按支付时间倒序排序
         $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
 
