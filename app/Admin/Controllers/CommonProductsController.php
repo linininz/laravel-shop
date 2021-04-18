@@ -40,7 +40,7 @@ abstract class CommonProductsController extends AdminController
     
         protected function form()
         {
-            $form = Form::make(Product::with('skus','crowdfunding'));
+            $form = Form::make(Product::with('skus','crowdfunding','properties'));
             // 在表单页面中添加一个名为 type 的隐藏字段，值为当前商品类型
             $form->hidden('type')->value($this->getProductType());
             $form->text('title', '商品名称')->rules('required');
@@ -62,6 +62,10 @@ abstract class CommonProductsController extends AdminController
                 $form->text('description', 'SKU 描述')->rules('required');
                 $form->text('price', '单价')->rules('required|numeric|min:0.01');
                 $form->text('stock', '剩余库存')->rules('required|integer|min:0');
+            });
+            $form->hasMany('properties', '商品属性', function (Form\NestedForm $form) {
+                $form->text('name', '属性名')->rules('required');
+                $form->text('value', '属性值')->rules('required');
             });
             $form->saving(function (Form $form) {
                 $form->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
