@@ -83,6 +83,13 @@ class Product extends Model
             'price',
         ]);
 
+        $arr['properties'] = $this->properties->map(function (ProductProperty $property) {
+            // 对应地增加一个 search_value 字段，用符号 : 将属性名和属性值拼接起来
+            return array_merge(Arr::only($property->toArray(), ['name', 'value']), [
+                'search_value' => $property->name.':'.$property->value,
+            ]);
+        });
+        
         // 如果商品有类目，则 category 字段为类目名数组，否则为空字符串
         $arr['category'] = $this->category ? explode(' - ', $this->category->full_name) : '';
         // 类目的 path 字段
