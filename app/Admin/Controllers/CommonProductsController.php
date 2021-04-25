@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Product;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Form;
+use App\Jobs\SyncOneProductToES;
+use phpseclib3\Crypt\EC\Curves\prime192v1;
 
 abstract class CommonProductsController extends AdminController
 {
@@ -70,6 +72,9 @@ abstract class CommonProductsController extends AdminController
             });
             $form->saving(function (Form $form) {
                 $form->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
+            });
+            $form->saved(function (Form $form) {
+                dispatch(new SyncOneProductToES(Product::with('skus','properties')->find($form->model()->id)));
             });
     
             return $form;
