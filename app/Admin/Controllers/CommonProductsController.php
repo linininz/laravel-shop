@@ -73,8 +73,12 @@ abstract class CommonProductsController extends AdminController
             $form->saving(function (Form $form) {
                 $form->price = collect($form->input('skus'))->where(Form::REMOVE_FLAG_NAME, 0)->min('price') ?: 0;
             });
-            $form->saved(function (Form $form) {
-                dispatch(new SyncOneProductToES(Product::with('skus','properties')->find($form->model()->id)));
+            $form->saved(function (Form $form, $result) {    
+                if ($form->isCreating()) {
+                    dispatch(new SyncOneProductToES(Product::with('skus','properties')->find($result)));
+                }else{
+                    dispatch(new SyncOneProductToES(Product::with('skus','properties')->find($form->model()->id)));
+                }
             });
     
             return $form;
