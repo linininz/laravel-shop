@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::post('seckill_orders', 'OrdersController@seckill')->name('seckill_orders.store');
 Route::redirect('/', '/products')->name('root');
 Auth::routes(['verify' => true]);
 // auth 中间件代表需要登录，verified中间件代表需要经过邮箱验证
@@ -45,7 +45,6 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('installments/{installment}', 'InstallmentsController@show')->name('installments.show');
     Route::get('installments/{installment}/alipay', 'InstallmentsController@payByAlipay')->name('installments.alipay');
     Route::get('installments/alipay/return', 'InstallmentsController@alipayReturn')->name('installments.alipay.return');
-    Route::post('seckill_orders', 'OrdersController@seckill')->name('seckill_orders.store');
 });
 Route::get('products', 'ProductsController@index')->name('products.index');
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
